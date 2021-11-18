@@ -18,12 +18,17 @@ function App() {
   }
 
   return (
-    <div>
+    <div className='container'>
       <h1>Signature Collectable</h1>
       <button onClick={clear}>Clear</button>
       <button onClick={save}>Save</button>
       <button onClick={load}>Load</button>
-      <SignaturePad penColor='blue' ref={sigPad} />
+      <div className='signatureContainer'>
+        <SignaturePad
+          penColor='blue'
+          ref={sigPad}
+          canvasProps={{ className: "signaturePad" }} />
+      </div>
     </div>
   );
 }
