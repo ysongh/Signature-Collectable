@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import SignaturePad from 'react-signature-canvas';
 
+import { SLATEAPIKEY } from './config';
+
 function App() {
   let sigPad = useRef({});
   let signatureData;
@@ -9,12 +11,29 @@ function App() {
     sigPad.current.clear();
   }
 
-  const save = () => {
+  const save = async () => {
     signatureData = sigPad.current.toDataURL();
     console.log(signatureData);
 
     const imageData = convertBase64ToImage(signatureData);
     console.log(imageData);
+
+    const url = 'https://uploads.slate.host/api/public';
+
+    let file = imageData;
+    let data = new FormData();
+    data.append("data", file);
+    
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: SLATEAPIKEY, // API key
+      },
+      body: data
+    });
+
+    const json = await response.json();
+    console.log(json);
   }
 
   const load = () => {
