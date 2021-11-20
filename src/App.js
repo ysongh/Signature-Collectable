@@ -1,12 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import SignaturePad from 'react-signature-canvas';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Navbar from './components/Navbar';
+import SignatureImg from './components/SignatureImg';
+import Board from './components/Board';
 import MintForm from './components/MintForm';
 
 import { SLATEAPIKEY, NFTPORT_APIKEY } from './config';
 
 function App() {
+  const [sigImgUrl, setSigImgUrl] = useState('');
   let sigPad = useRef({});
   let signatureData;
 
@@ -37,6 +42,7 @@ function App() {
 
     const json = await response.json();
     console.log(json);
+    setSigImgUrl(`https://slate.textile.io/ipfs/${json.data.cid}`);
   }
 
   const load = () => {
@@ -89,11 +95,11 @@ function App() {
   }
 
   return (
-    <div>
+    <DndProvider backend={HTML5Backend}>
       <Navbar />
       <div className='container mt-4'>
         <div className="row">
-          <div className="col-sm-12 col-md-3">
+          <div className="col-sm-12 col-md-4">
             <div className="btn-group btn-group-lg mb-4" role="group" >
               <button type="button" className="btn btn-outline-primary" onClick={clear}>
                 Clear
@@ -108,9 +114,6 @@ function App() {
                 Mint
               </button>
             </div>
-          </div>
-
-          <div className="col-sm-12 col-md-9">
             <p className="text-center h4">Sign Here</p>
             <div className='signatureContainer'>
               <SignaturePad
@@ -118,14 +121,25 @@ function App() {
                 ref={sigPad}
                 canvasProps={{ className: "signaturePad" }} />
             </div>
+            {sigImgUrl && (
+              <div>
+                <p className="text-center mt-4 h4">Drag and drop to Board</p>
+                <SignatureImg sigImgUrl={sigImgUrl} signatureData={signatureData}/>
+              </div>
+            )}
+          </div>
+
+          <div className="col-sm-12 col-md-8">
+            <Board sigImgUrl={sigImgUrl} />
           </div>
         </div>
 
+        
         <div className="collapse mt-4" id="collapseExample">
           <MintForm mint={mint} />
         </div>
       </div>
-    </div>
+    </DndProvider>
   );
 }
 
