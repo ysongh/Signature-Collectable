@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import SignaturePad from 'react-signature-canvas';
 
+import Navbar from './components/Navbar';
+
 import { SLATEAPIKEY } from './config';
 
 function App() {
@@ -56,30 +58,32 @@ function App() {
   }
 
   return (
-    <div className='container'>
-      <h1 className="my-4">Signature Collectable</h1>
-      <div className="row">
-        <div className="col-sm-12 col-md-3">
-          <div className="btn-group btn-group-lg mb-4" role="group" >
-            <button type="button" className="btn btn-outline-primary" onClick={clear}>
-              Clear
-            </button>
-            <button type="button" className="btn btn-outline-primary" onClick={save}>
-              Save
-            </button>
-            <button type="button" className="btn btn-outline-primary" onClick={load}>
-              Load
-            </button>
+    <div>
+      <Navbar />
+      <div className='container mt-4'>
+        <div className="row">
+          <div className="col-sm-12 col-md-3">
+            <div className="btn-group btn-group-lg mb-4" role="group" >
+              <button type="button" className="btn btn-outline-primary" onClick={clear}>
+                Clear
+              </button>
+              <button type="button" className="btn btn-outline-primary" onClick={save}>
+                Save
+              </button>
+              <button type="button" className="btn btn-outline-primary" onClick={load}>
+                Load
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div className="col-sm-12 col-md-9">
-          <p className="text-center h4">Sign Here</p>
-          <div className='signatureContainer'>
-            <SignaturePad
-              penColor='blue'
-              ref={sigPad}
-              canvasProps={{ className: "signaturePad" }} />
+          <div className="col-sm-12 col-md-9">
+            <p className="text-center h4">Sign Here</p>
+            <div className='signatureContainer'>
+              <SignaturePad
+                penColor='blue'
+                ref={sigPad}
+                canvasProps={{ className: "signaturePad" }} />
+            </div>
           </div>
         </div>
       </div>
