@@ -2,8 +2,9 @@ import React, { useRef } from 'react';
 import SignaturePad from 'react-signature-canvas';
 
 import Navbar from './components/Navbar';
+import MintForm from './components/MintForm';
 
-import { SLATEAPIKEY } from './config';
+import { SLATEAPIKEY, NFTPORT_APIKEY } from './config';
 
 function App() {
   let sigPad = useRef({});
@@ -57,6 +58,36 @@ function App() {
     return new File([u8arr], filename, {type:mime});
   }
 
+  const mint = async (name, description, address) => {
+    signatureData = sigPad.current.toDataURL();
+    console.log(signatureData);
+
+    const imageData = convertBase64ToImage(signatureData);
+    console.log(imageData);
+
+    const form = new FormData();
+    form.append('file', imageData);
+
+    const options = {
+      method: 'POST',
+      body: form,
+      headers: {
+        "Authorization": NFTPORT_APIKEY,
+      },
+    };
+
+    const response = await fetch("https://api.nftport.xyz/easy_mint?" + new URLSearchParams({
+      chain: 'polygon',
+      name: name,
+      description: description,
+      mint_to_address: address,
+    }), options);
+
+    const json = await response.json();
+    console.log(json);
+    return json.transaction_external_url;
+  }
+
   return (
     <div>
       <Navbar />
@@ -73,6 +104,9 @@ function App() {
               <button type="button" className="btn btn-outline-primary" onClick={load}>
                 Load
               </button>
+              <button type="button" className="btn btn-outline-primary"  data-bs-toggle="collapse" data-bs-target="#collapseExample">
+                Mint
+              </button>
             </div>
           </div>
 
@@ -85,6 +119,10 @@ function App() {
                 canvasProps={{ className: "signaturePad" }} />
             </div>
           </div>
+        </div>
+
+        <div className="collapse mt-4" id="collapseExample">
+          <MintForm mint={mint} />
         </div>
       </div>
     </div>
