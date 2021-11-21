@@ -80,6 +80,12 @@ function Home({ account, scContract }) {
   }
 
   const mint = async (name, description, address) => {
+    if(address[0] !== '0'){
+      const ethAddress = await window.web3.eth.ens.getAddress(address);
+      console.log(ethAddress);
+      address = ethAddress;
+    }
+
     const node = document.getElementById('my-node');
     const dataUrl = await htmlToImage.toPng(node);
     console.log(dataUrl);

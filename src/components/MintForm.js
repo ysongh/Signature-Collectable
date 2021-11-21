@@ -24,7 +24,7 @@ function MintForm({ mint }) {
         <textarea className="form-control" id="description" rows="3" onChange={(e) => setDescription(e.target.value)}></textarea>
       </div>
       <div className="mb-3">
-        <label for="address" className="form-label">Mint to Address</label>
+        <label for="address" className="form-label">ETH Address or ENS Name to mint NFT to</label>
         <input className="form-control" id="address" onChange={(e) => setAddress(e.target.value)} />
       </div>
       <div className="mb-3">
