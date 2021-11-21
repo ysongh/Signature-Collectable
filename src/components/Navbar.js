@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Web3 from 'web3';
 
 import SignatureCollectable from '../abis/SignatureCollectable.json';
@@ -36,14 +37,17 @@ function Navbar({ account, setAccount, setSCContract }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        <a className="navbar-brand" href="#">Signature Collectable</a>
+        <a className="navbar-brand" href="/">Signature Collectable</a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="/">Home</a>
+              <Link className="nav-link" aria-current="page" to="/">Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" aria-current="page" to="/my-collection">My Collection</Link>
             </li>
           </ul>
           <button className="btn btn-outline-success" onClick={loadBlockchain}>

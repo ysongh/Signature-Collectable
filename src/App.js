@@ -5,6 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
+import MyCollection from './pages/MyCollection';
 
 function App() {
   const [account, setAccount] = useState('');
@@ -18,6 +19,10 @@ function App() {
           setAccount={setAccount}
           setSCContract={setSCContract} />
           <Switch>
+            <Route path="/my-collection">
+              <MyCollection
+                account={account} />
+            </Route>
             <Route path="/">
               <Home
                 account={account}
