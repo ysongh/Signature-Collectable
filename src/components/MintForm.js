@@ -13,7 +13,7 @@ function MintForm({ mint }) {
   }
 
   return (
-    <div className="card card-body m-auto" style={{ maxWidth: '500px' }}>
+    <div className="card card-body m-auto">
       <h2>Mint NFT for free on Polygon</h2>
       <div className="mb-3">
         <label for="name" className="form-label">Name</label>

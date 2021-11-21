@@ -12,6 +12,10 @@ import { SLATEAPIKEY, NFTPORT_APIKEY } from './config';
 
 function App() {
   const [sigImgUrl, setSigImgUrl] = useState('');
+  const [board, setBoard] = useState([]);
+  const [account, setAccount] = useState('');
+  const [scContract, setSCContract] = useState(null);
+
   let sigPad = useRef({});
   let signatureData;
 
@@ -19,7 +23,7 @@ function App() {
     sigPad.current.clear();
   }
 
-  const save = async () => {
+  const uploadToIPFS = async () => {
     signatureData = sigPad.current.toDataURL();
     console.log(signatureData);
 
@@ -47,6 +51,19 @@ function App() {
 
   const load = () => {
     sigPad.current.fromDataURL(signatureData);
+  }
+
+  const loadFromContract = async () => {
+    const images = await scContract.methods.getSignatureImages(account).call();
+    setBoard(images);
+  }
+
+  const save = async () => {
+    const tx = await scContract.methods
+      .addImageToCollection(account, board)
+      .send({ from: account });
+
+    console.log(tx);
   }
 
   const convertBase64ToImage = signatureData => {
@@ -94,9 +111,16 @@ function App() {
     return json.transaction_external_url;
   }
 
+  const addImageToBoard = (temp) => {
+    setBoard([...temp, sigImgUrl]);
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
-      <Navbar />
+      <Navbar
+        account={account}
+        setAccount={setAccount}
+        setSCContract={setSCContract} />
       <div className='container mt-4'>
         <div className="row">
           <div className="col-sm-12 col-md-4">
@@ -104,14 +128,11 @@ function App() {
               <button type="button" className="btn btn-outline-primary" onClick={clear}>
                 Clear
               </button>
-              <button type="button" className="btn btn-outline-primary" onClick={save}>
-                Save
+              <button type="button" className="btn btn-outline-primary" onClick={uploadToIPFS}>
+                Upload to IPFS
               </button>
               <button type="button" className="btn btn-outline-primary" onClick={load}>
                 Load
-              </button>
-              <button type="button" className="btn btn-outline-primary"  data-bs-toggle="collapse" data-bs-target="#collapseExample">
-                Mint
               </button>
             </div>
             <p className="text-center h4">Sign Here</p>
@@ -130,13 +151,25 @@ function App() {
           </div>
 
           <div className="col-sm-12 col-md-8">
-            <Board sigImgUrl={sigImgUrl} />
+            <div className="btn-group btn-group-lg mb-4" role="group" >
+              <button type="button" className="btn btn-outline-primary" onClick={loadFromContract}>
+                Load
+              </button>
+              <button type="button" className="btn btn-outline-primary" onClick={save}>
+                Save
+              </button>
+              <button type="button" className="btn btn-outline-primary"  data-bs-toggle="collapse" data-bs-target="#collapseExample">
+                Mint
+              </button>
+            </div>
+            <p className="text-center h4">Your Collection Board</p>
+            <div className="collapse mt-4" id="collapseExample">
+              <MintForm mint={mint} />
+            </div>
+            <Board
+              board={board}
+              addImageToBoard={addImageToBoard} />
           </div>
-        </div>
-
-        
-        <div className="collapse mt-4" id="collapseExample">
-          <MintForm mint={mint} />
         </div>
       </div>
     </DndProvider>

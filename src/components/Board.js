@@ -1,23 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDrop } from "react-dnd";
 
-function Board({ sigImgUrl }) {
-  const [board, setBoard] = useState([]);
-
+function Board({ board, addImageToBoard }) {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "signature",
-    drop: () => addImageToBoard(),
+    drop: () => addImageToBoard(board),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
   }));
-
-  const addImageToBoard = () => {
-    const temp = [...board];
-    temp.push(sigImgUrl);
-    setBoard(temp);
-    console.log(board, sigImgUrl, temp);
-  };
 
   return (
     <div>
