@@ -6,14 +6,16 @@ import * as htmlToImage from 'html-to-image';
 import SignatureImg from '../components/SignatureImg';
 import Board from '../components/Board';
 import MintForm from '../components/MintForm';
+import Spinner from '../components/common/Spinner';
 
 import { SLATEAPIKEY, NFTPORT_APIKEY } from '../config';
 
 function Home({ account, scContract }) {
   const { address } = useParams();
 
-  const [sigImgUrl, setSigImgUrl] = useState('https://slate.textile.io/ipfs/bafkreichqmwkbbkkw4lgfwnzuityzo6pjsu3es32kidqqzy3siwjmdwk54');
+  const [sigImgUrl, setSigImgUrl] = useState('');
   const [board, setBoard] = useState([]);
+  const [saveLoading, setSaveLoading] = useState(false);
 
   let sigPad = useRef({});
   let signatureData;
@@ -24,29 +26,36 @@ function Home({ account, scContract }) {
   }
 
   const uploadToIPFS = async () => {
-    signatureData = sigPad.current.toDataURL();
-    console.log(signatureData);
+    try{
+      setSaveLoading(true);
+      signatureData = sigPad.current.toDataURL();
+      console.log(signatureData);
 
-    const imageData = convertBase64ToImage(signatureData);
-    console.log(imageData);
+      const imageData = convertBase64ToImage(signatureData);
+      console.log(imageData);
 
-    const url = 'https://uploads.slate.host/api/public';
+      const url = 'https://uploads.slate.host/api/public';
 
-    let file = imageData;
-    let data = new FormData();
-    data.append("data", file);
-    
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        Authorization: SLATEAPIKEY, // API key
-      },
-      body: data
-    });
+      let file = imageData;
+      let data = new FormData();
+      data.append("data", file);
+      
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          Authorization: SLATEAPIKEY, // API key
+        },
+        body: data
+      });
 
-    const json = await response.json();
-    console.log(json);
-    setSigImgUrl(`https://slate.textile.io/ipfs/${json.data.cid}`);
+      const json = await response.json();
+      console.log(json);
+      setSigImgUrl(`https://slate.textile.io/ipfs/${json.data.cid}`);
+      setSaveLoading(false);
+    } catch(error) {
+      console.error(error);
+      setSaveLoading(false);
+    }
   }
 
   const load = () => {
@@ -125,7 +134,7 @@ function Home({ account, scContract }) {
 
   const addImageToBoard = () => {
     console.log("signatureArray", signatureArray)
-    setBoard([...signatureArray, sigImgUrl]);
+    setBoard([signatureArray, sigImgUrl]);
   };
 
   return (
@@ -150,12 +159,15 @@ function Home({ account, scContract }) {
               ref={sigPad}
               canvasProps={{ className: "signaturePad" }} />
           </div>
-          {sigImgUrl && (
-            <div>
-              <p className="text-center mt-4 h4">Drag and drop to Board</p>
-              <SignatureImg sigImgUrl={sigImgUrl} signatureData={signatureData}/>
-            </div>
-          )}
+          {saveLoading
+            ? <Spinner />
+            : sigImgUrl && (
+                <div>
+                  <p className="text-center mt-4 h4">Drag and drop to Board</p>
+                  <SignatureImg sigImgUrl={sigImgUrl} signatureData={signatureData}/>
+                </div>
+              )
+          }
         </div>
 
         <div className="col-sm-12 col-md-7">

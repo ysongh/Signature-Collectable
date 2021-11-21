@@ -1,15 +1,26 @@
 import React, { useState }from 'react';
 
+import SpinnerButton from './common/SpinnerButton';
+
 function MintForm({ mint }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [address, setAddress] = useState('');
   const [transactionUrl, setTransactionUrl] = useState('');
+  const [mintLoading, setMintLoading] = useState(false);
 
   const handleMint = async () => {
-    console.log(name, description, address);
-    const url = await mint(name, description, address);
-    setTransactionUrl(url);
+    try{
+      setMintLoading(true);
+
+      console.log(name, description, address);
+      const url = await mint(name, description, address);
+      setTransactionUrl(url);
+      setMintLoading(false);
+    } catch(error) {
+      console.error(error);
+      setMintLoading(false);
+    }
   }
 
   return (
@@ -28,9 +39,12 @@ function MintForm({ mint }) {
         <input className="form-control" id="address" onChange={(e) => setAddress(e.target.value)} />
       </div>
       <div className="mb-3">
-        <button className="btn btn-primary mb-3" onClick={handleMint}>
-          Mint
-        </button>
+        {!mintLoading
+          ? <button className="btn btn-primary btn-lg mb-3" onClick={handleMint}>
+              Mint NFT
+            </button>
+          : <SpinnerButton />
+        }
       </div>
       {transactionUrl &&
         <p className="text-success" style={{ fontSize: '1.4rem'}}>
