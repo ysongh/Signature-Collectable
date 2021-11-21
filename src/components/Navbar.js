@@ -50,7 +50,7 @@ function Navbar({ account, setAccount, setSCContract }) {
               <Link className="nav-link" aria-current="page" to="/my-collection">My Collection</Link>
             </li>
           </ul>
-          <button className="btn btn-outline-success" onClick={loadBlockchain}>
+          <button className="btn btn-success" onClick={loadBlockchain}>
             {account ? account.substring(0,8) + "..." + account.substring(34,42) :"Connect to Wallet"}
           </button>
         </div>

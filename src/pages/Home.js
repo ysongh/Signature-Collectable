@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import SignaturePad from 'react-signature-canvas';
 import * as htmlToImage from 'html-to-image';
 
@@ -9,14 +10,16 @@ import MintForm from '../components/MintForm';
 import { SLATEAPIKEY, NFTPORT_APIKEY } from '../config';
 
 function Home({ account, scContract }) {
-	const [sigImgUrl, setSigImgUrl] = useState('https://slate.textile.io/ipfs/bafkreichqmwkbbkkw4lgfwnzuityzo6pjsu3es32kidqqzy3siwjmdwk54');
+  const { address } = useParams();
+
+  const [sigImgUrl, setSigImgUrl] = useState('https://slate.textile.io/ipfs/bafkreichqmwkbbkkw4lgfwnzuityzo6pjsu3es32kidqqzy3siwjmdwk54');
   const [board, setBoard] = useState([]);
 
-	let sigPad = useRef({});
+  let sigPad = useRef({});
   let signatureData;
   let signatureArray = [];
 
-	const clear = () => {
+  const clear = () => {
     sigPad.current.clear();
   }
 
@@ -51,14 +54,14 @@ function Home({ account, scContract }) {
   }
 
   const loadFromContract = async () => {
-    const images = await scContract.methods.getSignatureImages(account).call();
+    const images = await scContract.methods.getSignatureImages(address || account).call();
     setBoard(images);
     signatureArray = [images];
   }
 
   const save = async () => {
     const tx = await scContract.methods
-      .addImageToCollection(account, board)
+      .addImageToCollection(address || account, board)
       .send({ from: account });
 
     console.log(tx);
@@ -116,66 +119,73 @@ function Home({ account, scContract }) {
     return json.transaction_external_url;
   }
 
+  const copyLink = () => {
+    navigator.clipboard.writeText(`${window.location.href}collection/${account}`);
+  }
+
   const addImageToBoard = () => {
     console.log("signatureArray", signatureArray)
     setBoard([...signatureArray, sigImgUrl]);
   };
 
-	return (
-		<div className='container mt-4'>
-			<div className="row">
-				<div className="col-sm-12 col-md-5">
-					<div className="btn-group btn-group-lg mb-4" role="group" >
-						<button type="button" className="btn btn-outline-primary" onClick={clear}>
-							Clear
-						</button>
-						<button type="button" className="btn btn-outline-primary" onClick={uploadToIPFS}>
-							Upload to IPFS
-						</button>
-						<button type="button" className="btn btn-outline-primary" onClick={load}>
-							Load
-						</button>
-					</div>
-					<p className="text-center h4">Sign Here</p>
-					<div className='signatureContainer'>
-						<SignaturePad
-							penColor='blue'
-							ref={sigPad}
-							canvasProps={{ className: "signaturePad" }} />
-					</div>
-					{sigImgUrl && (
-						<div>
-							<p className="text-center mt-4 h4">Drag and drop to Board</p>
-							<SignatureImg sigImgUrl={sigImgUrl} signatureData={signatureData}/>
-						</div>
-					)}
-				</div>
+  return (
+    <div className='container mt-4'>
+      <div className="row">
+        <div className="col-sm-12 col-md-5">
+          <div className="btn-group btn-group-lg mb-4" role="group" >
+            <button type="button" className="btn btn-outline-primary" onClick={clear}>
+              Clear
+            </button>
+            <button type="button" className="btn btn-outline-primary" onClick={uploadToIPFS}>
+              Upload to IPFS
+            </button>
+            <button type="button" className="btn btn-outline-primary" onClick={load}>
+              Load
+            </button>
+          </div>
+          <p className="text-center h4">Sign Here</p>
+          <div className='signatureContainer'>
+            <SignaturePad
+              penColor='blue'
+              ref={sigPad}
+              canvasProps={{ className: "signaturePad" }} />
+          </div>
+          {sigImgUrl && (
+            <div>
+              <p className="text-center mt-4 h4">Drag and drop to Board</p>
+              <SignatureImg sigImgUrl={sigImgUrl} signatureData={signatureData}/>
+            </div>
+          )}
+        </div>
 
-				<div className="col-sm-12 col-md-7">
-					<div className="btn-group btn-group-lg mb-4" role="group" >
-						<button type="button" className="btn btn-outline-primary" onClick={loadFromContract}>
-							Load from Contract
-						</button>
-						<button type="button" className="btn btn-outline-primary" onClick={save}>
-							Save to Contract
-						</button>
-						<button type="button" className="btn btn-outline-primary"  data-bs-toggle="collapse" data-bs-target="#collapseExample">
-							Mint on Polygon
-						</button>
-					</div>
-					<p className="text-center h4">Your Collection Board</p>
-					<div className="collapse mt-4" id="collapseExample">
-						<MintForm mint={mint} />
-					</div>
-					<div className="card">
-						<Board
-							board={board}
-							addImageToBoard={addImageToBoard} />
-					</div>
-				</div>
-			</div>
-		</div>
-	)
+        <div className="col-sm-12 col-md-7">
+          <div className="btn-group btn-group-lg mb-4" role="group" >
+            <button type="button" className="btn btn-outline-primary" onClick={loadFromContract}>
+              Load from Contract
+            </button>
+            <button type="button" className="btn btn-outline-primary" onClick={save}>
+              Save to Contract
+            </button>
+            <button type="button" className="btn btn-outline-primary"  data-bs-toggle="collapse" data-bs-target="#collapseExample">
+              Mint on Polygon
+            </button>
+            <button type="button" className="btn btn-outline-primary" onClick={copyLink}>
+              Copy Link
+            </button>
+          </div>
+          <p className="text-center h4">Your Collection Board</p>
+          <div className="collapse mt-4" id="collapseExample">
+            <MintForm mint={mint} />
+          </div>
+          <div className="card">
+            <Board
+              board={board}
+              addImageToBoard={addImageToBoard} />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default Home;

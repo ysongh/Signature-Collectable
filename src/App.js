@@ -23,6 +23,11 @@ function App() {
               <MyCollection
                 account={account} />
             </Route>
+            <Route path="/collection/:address">
+              <Home
+                account={account}
+                scContract={scContract} />
+            </Route>
             <Route path="/">
               <Home
                 account={account}
