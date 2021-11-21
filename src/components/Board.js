@@ -4,14 +4,16 @@ import { useDrop } from "react-dnd";
 function Board({ board, addImageToBoard }) {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "signature",
-    drop: () => addImageToBoard(board),
+    drop: () => addImageToBoard(),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
   }));
 
+  console.log(board, "board")
+
   return (
-    <div>
+    <div id="my-node">
       <div id="signatureBoard" className="Board" ref={drop}>
         {board.map((picture, index) => <img key={index} src={picture} alt="sig" width="300px" /> )}
       </div>

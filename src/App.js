@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import SignaturePad from 'react-signature-canvas';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import * as htmlToImage from 'html-to-image';
 
 import Navbar from './components/Navbar';
 import SignatureImg from './components/SignatureImg';
@@ -11,13 +12,14 @@ import MintForm from './components/MintForm';
 import { SLATEAPIKEY, NFTPORT_APIKEY } from './config';
 
 function App() {
-  const [sigImgUrl, setSigImgUrl] = useState('');
+  const [sigImgUrl, setSigImgUrl] = useState('https://slate.textile.io/ipfs/bafkreiazivk5dffd6yyslb7higwgbukjx7y4rnyv3igcko5chqcto2m2ba');
   const [board, setBoard] = useState([]);
   const [account, setAccount] = useState('');
   const [scContract, setSCContract] = useState(null);
 
   let sigPad = useRef({});
   let signatureData;
+  let signatureArray = [];
 
   const clear = () => {
     sigPad.current.clear();
@@ -56,6 +58,7 @@ function App() {
   const loadFromContract = async () => {
     const images = await scContract.methods.getSignatureImages(account).call();
     setBoard(images);
+    signatureArray = [images];
   }
 
   const save = async () => {
@@ -82,10 +85,11 @@ function App() {
   }
 
   const mint = async (name, description, address) => {
-    signatureData = sigPad.current.toDataURL();
-    console.log(signatureData);
+    const node = document.getElementById('my-node');
+    const dataUrl = await htmlToImage.toPng(node);
+    console.log(dataUrl);
 
-    const imageData = convertBase64ToImage(signatureData);
+    const imageData = convertBase64ToImage(dataUrl);
     console.log(imageData);
 
     const form = new FormData();
@@ -111,8 +115,9 @@ function App() {
     return json.transaction_external_url;
   }
 
-  const addImageToBoard = (temp) => {
-    setBoard([...temp, sigImgUrl]);
+  const addImageToBoard = () => {
+    console.log("signatureArray", signatureArray)
+    setBoard([...signatureArray, sigImgUrl]);
   };
 
   return (
@@ -123,7 +128,7 @@ function App() {
         setSCContract={setSCContract} />
       <div className='container mt-4'>
         <div className="row">
-          <div className="col-sm-12 col-md-4">
+          <div className="col-sm-12 col-md-5">
             <div className="btn-group btn-group-lg mb-4" role="group" >
               <button type="button" className="btn btn-outline-primary" onClick={clear}>
                 Clear
@@ -150,25 +155,27 @@ function App() {
             )}
           </div>
 
-          <div className="col-sm-12 col-md-8">
+          <div className="col-sm-12 col-md-7">
             <div className="btn-group btn-group-lg mb-4" role="group" >
               <button type="button" className="btn btn-outline-primary" onClick={loadFromContract}>
-                Load
+                Load from Contract
               </button>
               <button type="button" className="btn btn-outline-primary" onClick={save}>
-                Save
+                Save to Contract
               </button>
               <button type="button" className="btn btn-outline-primary"  data-bs-toggle="collapse" data-bs-target="#collapseExample">
-                Mint
+                Mint on Polygon
               </button>
             </div>
             <p className="text-center h4">Your Collection Board</p>
             <div className="collapse mt-4" id="collapseExample">
               <MintForm mint={mint} />
             </div>
-            <Board
-              board={board}
-              addImageToBoard={addImageToBoard} />
+            <div className="card">
+              <Board
+                board={board}
+                addImageToBoard={addImageToBoard} />
+            </div>
           </div>
         </div>
       </div>
