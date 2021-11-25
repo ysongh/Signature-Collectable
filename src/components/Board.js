@@ -4,7 +4,7 @@ import { useDrop } from "react-dnd";
 function Board({ board, addImageToBoard }) {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "signature",
-    drop: () => addImageToBoard(),
+    drop: (sigImgUrl) => addImageToBoard(sigImgUrl),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),

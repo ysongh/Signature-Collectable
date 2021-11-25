@@ -132,9 +132,9 @@ function Home({ account, scContract }) {
     navigator.clipboard.writeText(`${window.location.href}collection/${account}`);
   }
 
-  const addImageToBoard = () => {
-    console.log("signatureArray", signatureArray)
-    setBoard([signatureArray, sigImgUrl]);
+  const addImageToBoard = ({ sigImgUrl }) => {
+    console.log("signatureArray", sigImgUrl);
+    setBoard([...board, sigImgUrl]);
   };
 
   return (
@@ -164,7 +164,7 @@ function Home({ account, scContract }) {
             : sigImgUrl && (
                 <div>
                   <p className="text-center mt-4 h4">Drag and drop to Board</p>
-                  <SignatureImg sigImgUrl={sigImgUrl} signatureData={signatureData}/>
+                  <SignatureImg sigImgUrl={sigImgUrl} signatureData={signatureData} />
                 </div>
               )
           }

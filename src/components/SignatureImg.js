@@ -4,6 +4,9 @@ import { useDrag } from 'react-dnd';
 function SignatureImg({ sigImgUrl, signatureData }) {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "signature",
+    item: {
+      sigImgUrl: sigImgUrl
+    },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
