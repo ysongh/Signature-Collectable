@@ -20,12 +20,13 @@ function Navbar({ account, setAccount, setSCContract }) {
 
     const web3 = window.web3;
 
-    const netId = await web3.eth.net.getId();
     const accounts = await web3.eth.getAccounts();
-
     setAccount(accounts[0]);
 
-    if(netId){
+    const netId = await web3.eth.net.getId();
+    const netData = SignatureCollectable.networks[netId];
+
+    if(netData){
       const contract = new web3.eth.Contract(SignatureCollectable.abi, SignatureCollectable.networks[netId].address);
       setSCContract(contract);
     }
