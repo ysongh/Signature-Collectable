@@ -172,12 +172,12 @@ function Home({ account, scContract }) {
 
         <div className="col-sm-12 col-md-7">
           <div className="btn-group btn-group-lg mb-4" role="group" >
-            <button type="button" className="btn btn-outline-primary" onClick={loadFromContract}>
+            {scContract && <button type="button" className="btn btn-outline-primary" onClick={loadFromContract}>
               Load from Contract
-            </button>
-            <button type="button" className="btn btn-outline-primary" onClick={save}>
+            </button>}
+            {scContract && <button type="button" className="btn btn-outline-primary" onClick={save}>
               Save to Contract
-            </button>
+            </button>}
             <button type="button" className="btn btn-outline-primary"  data-bs-toggle="collapse" data-bs-target="#collapseExample">
               Mint on Polygon
             </button>
