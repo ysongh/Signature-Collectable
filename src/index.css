@@ -32,3 +32,7 @@ code {
 .Board {
   height: 500px;
 }
+
+.logo {
+  width: 100px;
+}

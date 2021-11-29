@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Web3 from 'web3';
 
 import SignatureCollectable from '../abis/SignatureCollectable.json';
+import Logo from '../logo.png';
 
 function Navbar({ account, setAccount, setSCContract }) {
   const loadBlockchain = async () => {
@@ -38,7 +39,9 @@ function Navbar({ account, setAccount, setSCContract }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        <a className="navbar-brand" href="/">Signature Collectable</a>
+        <a className="navbar-brand" href="/">
+          <img className="logo" src={Logo} alt="Logo" />
+        </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
