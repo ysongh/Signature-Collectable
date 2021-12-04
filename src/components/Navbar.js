@@ -1,9 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import UAuth from '@uauth/js'
 import Web3 from 'web3';
+import {
+  UNSTOPPABLEDOMAINS_CLIENTID,
+  UNSTOPPABLEDOMAINS_CLIENTSECRET,
+  UNSTOPPABLEDOMAINS_REDIRECT_URI,
+  UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI
+} from '../config';
 
 import SignatureCollectable from '../abis/SignatureCollectable.json';
 import Logo from '../logo.png';
+
+const uauth = new UAuth({
+  // Client credentials copied from https://unstoppabledomains.com/app-dashboard
+  clientID: UNSTOPPABLEDOMAINS_CLIENTID,
+  clientSecret: UNSTOPPABLEDOMAINS_CLIENTSECRET,
+
+  // Requested scopes.
+  scope: 'openid email wallet',
+
+  // Redirect Uris copied from https://unstoppabledomains.com/app-dashboard
+  redirectUri: UNSTOPPABLEDOMAINS_REDIRECT_URI,
+  postLogoutRedirectUri: UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI,
+})
 
 function Navbar({ account, setAccount, setSCContract }) {
   const loadBlockchain = async () => {
@@ -36,6 +56,10 @@ function Navbar({ account, setAccount, setSCContract }) {
     }
   }
 
+  const loginWithUnstoppableDomains = async () => {
+    uauth.login();
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -54,6 +78,9 @@ function Navbar({ account, setAccount, setSCContract }) {
               <Link className="nav-link" aria-current="page" to="/my-collection">My Collection</Link>
             </li>
           </ul>
+          <button className="btn btn-success" onClick={loginWithUnstoppableDomains}>
+            Login with Unstoppable Domains
+          </button>
           <button className="btn btn-success" onClick={loadBlockchain}>
             {account ? account.substring(0,8) + "..." + account.substring(34,42) :"Connect to Wallet"}
           </button>
