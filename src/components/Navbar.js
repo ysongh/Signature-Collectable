@@ -84,8 +84,8 @@ function Navbar({ account, setAccount, setSCContract }) {
               <Link className="nav-link" aria-current="page" to="/my-collection">My Collection</Link>
             </li>
           </ul>
-          <button className="btn btn-success me-2" onClick={loginWithUnstoppableDomains}>
-            Login with Unstoppable Domains
+          <button className="btn btn-sm me-2" onClick={loginWithUnstoppableDomains}>
+            <img src="/unstoppable-default-button.png" alt="Unstoppable Button" width={300} />
           </button>
           <button className="btn btn-success" onClick={loadBlockchain}>
             {account ? account.substring(0,8) + "..." + account.substring(34,42) :"Connect to Wallet"}
