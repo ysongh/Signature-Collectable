@@ -57,7 +57,13 @@ function Navbar({ account, setAccount, setSCContract }) {
   }
 
   const loginWithUnstoppableDomains = async () => {
-    uauth.login();
+    try {
+      const authorization = await uauth.loginWithPopup();
+   
+      console.log(authorization);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -78,7 +84,7 @@ function Navbar({ account, setAccount, setSCContract }) {
               <Link className="nav-link" aria-current="page" to="/my-collection">My Collection</Link>
             </li>
           </ul>
-          <button className="btn btn-success" onClick={loginWithUnstoppableDomains}>
+          <button className="btn btn-success me-2" onClick={loginWithUnstoppableDomains}>
             Login with Unstoppable Domains
           </button>
           <button className="btn btn-success" onClick={loadBlockchain}>
