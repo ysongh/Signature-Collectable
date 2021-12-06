@@ -61,6 +61,7 @@ function Navbar({ account, setAccount, setSCContract }) {
       const authorization = await uauth.loginWithPopup();
    
       console.log(authorization);
+      setAccount(authorization.idToken.sub);
     } catch (error) {
       console.error(error);
     }
@@ -88,7 +89,7 @@ function Navbar({ account, setAccount, setSCContract }) {
             <img src="/unstoppable-default-button.png" alt="Unstoppable Button" width={300} />
           </button>
           <button className="btn btn-success" onClick={loadBlockchain}>
-            {account ? account.substring(0,8) + "..." + account.substring(34,42) :"Connect to Wallet"}
+            {account ? account :"Connect to Wallet"}
           </button>
         </div>
       </div>
