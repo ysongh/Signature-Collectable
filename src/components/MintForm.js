@@ -27,15 +27,15 @@ function MintForm({ mint }) {
     <div className="card card-body m-auto">
       <h2>Mint NFT for free on Polygon</h2>
       <div className="mb-3">
-        <label for="name" className="form-label">Name</label>
+        <label htmlFor="name" className="form-label">Name</label>
         <input className="form-control" id="name" onChange={(e) => setName(e.target.value)}/>
       </div>
       <div className="mb-3">
-        <label for="description" className="form-label">Description</label>
+        <label htmlFor="description" className="form-label">Description</label>
         <textarea className="form-control" id="description" rows="3" onChange={(e) => setDescription(e.target.value)}></textarea>
       </div>
       <div className="mb-3">
-        <label for="address" className="form-label">ETH Address or ENS Name to mint NFT to</label>
+        <label htmlFor="address" className="form-label">ETH Address or ENS Name to mint NFT to</label>
         <input className="form-control" id="address" onChange={(e) => setAddress(e.target.value)} />
       </div>
       <div className="mb-3">
