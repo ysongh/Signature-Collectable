@@ -79,7 +79,16 @@ function Navbar({ account, user, setUser, setAccount, setSCContract }) {
     }
   }
 
-  console.log(user, "user")
+  const logoutFromUnstoppableDomains = async () => {
+    try {
+      await uauth.logout();
+   
+      setAccount("");
+      setUser(null);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -99,9 +108,14 @@ function Navbar({ account, user, setUser, setAccount, setSCContract }) {
               <Link className="nav-link" aria-current="page" to="/my-collection">My Collection</Link>
             </li>
           </ul>
-          <button className="btn btn-sm me-2" onClick={loginWithUnstoppableDomains}>
-            <img src="/unstoppable-default-button.png" alt="Unstoppable Button" width={300} />
-          </button>
+          {!account
+            ? <button className="btn btn-sm me-2" onClick={loginWithUnstoppableDomains}>
+                <img src="/unstoppable-default-button.png" alt="Unstoppable Button" width={300} />
+              </button>
+            : <button className="btn btn-danger me-2" onClick={logoutFromUnstoppableDomains}>
+                Logout
+              </button>
+          }
           <button className="btn btn-success" onClick={loadBlockchain}>
             {account ? account :"Connect to Wallet"}
           </button>
