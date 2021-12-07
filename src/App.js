@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import MyCollection from './pages/MyCollection';
 
 function App() {
+  const [user, setUser] = useState('');
   const [account, setAccount] = useState('');
   const [scContract, setSCContract] = useState(null);
 
@@ -16,6 +17,8 @@ function App() {
       <Router>
         <Navbar
           account={account}
+          user={user}
+          setUser={setUser}
           setAccount={setAccount}
           setSCContract={setSCContract} />
           <Switch>

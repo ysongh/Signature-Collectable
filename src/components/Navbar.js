@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import UAuth from '@uauth/js'
 import Web3 from 'web3';
@@ -25,7 +25,19 @@ const uauth = new UAuth({
   postLogoutRedirectUri: UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI,
 })
 
-function Navbar({ account, setAccount, setSCContract }) {
+function Navbar({ account, user, setUser, setAccount, setSCContract }) {
+  useEffect(() => {
+    uauth
+      .user()
+      .then(userData => {
+        setUser(userData);
+        setAccount(userData.sub);
+      })
+      .catch(error => {
+        console.error('profile error:', error);
+      })
+  }, [])
+
   const loadBlockchain = async () => {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
@@ -66,6 +78,8 @@ function Navbar({ account, setAccount, setSCContract }) {
       console.error(error);
     }
   }
+
+  console.log(user, "user")
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
