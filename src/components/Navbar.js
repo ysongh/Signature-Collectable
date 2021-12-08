@@ -25,7 +25,7 @@ const uauth = new UAuth({
   postLogoutRedirectUri: UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI,
 })
 
-function Navbar({ account, user, setUser, setAccount, setSCContract }) {
+function Navbar({ account, setUser, setAccount, setSCContract }) {
   useEffect(() => {
     uauth
       .user()

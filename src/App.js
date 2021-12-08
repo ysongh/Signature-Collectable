@@ -23,6 +23,7 @@ function App() {
           <Switch>
             <Route path="/my-collection">
               <MyCollection
+                user={user}
                 account={account} />
             </Route>
             <Route path="/collection/:address">

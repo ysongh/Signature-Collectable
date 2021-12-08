@@ -3,18 +3,19 @@ import React, { useEffect, useState } from 'react'
 import Spinner from '../components/common/Spinner';
 import { COVALENT_APIKEY } from '../config';
 
-function MyCollection({ account }) {
+function MyCollection({ user, account }) {
   const [userNFTs, setUserNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if(account) loadMyCollection();
-  }, [account])
+    if(user && user.wallet_address) loadMyCollection(user.wallet_address);
+    else if(account) loadMyCollection(account);
+  }, [user, account])
 
-  const loadMyCollection = async () => {
+  const loadMyCollection = async (_address) => {
     try{
       setLoading(true);
-      const nft = await fetch(`https://api.covalenthq.com/v1/137/address/${account}/balances_v2/?nft=true&key=${COVALENT_APIKEY}`);
+      const nft = await fetch(`https://api.covalenthq.com/v1/137/address/${_address}/balances_v2/?nft=true&key=${COVALENT_APIKEY}`);
       const { data } = await nft.json();
   
       console.log(data);
@@ -26,6 +27,8 @@ function MyCollection({ account }) {
       setLoading(false);
     }
   }
+
+  console.log(user)
 
   return (
     <div className='container mt-4'>
