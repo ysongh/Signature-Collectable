@@ -10,7 +10,7 @@ import Spinner from '../components/common/Spinner';
 
 import { SLATEAPIKEY, NFTPORT_APIKEY } from '../config';
 
-function Home({ account, scContract }) {
+function Home({ user, account, scContract }) {
   const { address } = useParams();
 
   const [sigImgUrl, setSigImgUrl] = useState('');
@@ -187,7 +187,7 @@ function Home({ account, scContract }) {
           </div>
           <p className="text-center h4">Your Collection Board</p>
           <div className="collapse mt-4" id="collapseExample">
-            <MintForm mint={mint} />
+            <MintForm user={user} mint={mint} />
           </div>
           <div className="card">
             <Board

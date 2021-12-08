@@ -17,7 +17,6 @@ function App() {
       <Router>
         <Navbar
           account={account}
-          user={user}
           setUser={setUser}
           setAccount={setAccount}
           setSCContract={setSCContract} />
@@ -28,11 +27,13 @@ function App() {
             </Route>
             <Route path="/collection/:address">
               <Home
+                user={user}
                 account={account}
                 scContract={scContract} />
             </Route>
             <Route path="/">
               <Home
+                user={user}
                 account={account}
                 scContract={scContract} />
             </Route>
