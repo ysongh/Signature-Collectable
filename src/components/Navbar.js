@@ -110,7 +110,12 @@ function Navbar({ account, setUser, setAccount, setSCContract }) {
               </button>
           }
           <button className="btn btn-success" onClick={loadBlockchain}>
-            {account ? account :"Connect to Wallet"}
+            {!account
+              ? "Connect to Wallet"
+              : account.length === 42
+                ? account.substring(0,8) + "..." + account.substring(34,42)
+                : account
+            }
           </button>
         </div>
       </div>
