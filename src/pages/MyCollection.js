@@ -31,7 +31,7 @@ function MyCollection({ user, account }) {
   console.log(user)
 
   return (
-    <div className='container mt-4'>
+    <div className='container mt-4' style={{ minHeight: '72vh'}}>
       <h1 className="mb-4">Your Signature NFT</h1>
       <div className="row">
         {loading

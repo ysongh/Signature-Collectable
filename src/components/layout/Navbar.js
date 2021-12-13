@@ -7,11 +7,11 @@ import {
   UNSTOPPABLEDOMAINS_CLIENTSECRET,
   UNSTOPPABLEDOMAINS_REDIRECT_URI,
   UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI
-} from '../config';
+} from '../../config';
 
-import SignatureCollectable from '../abis/SignatureCollectable.json';
-import { web3modal } from '../components/Web3modal'
-import Logo from '../logo.png';
+import SignatureCollectable from '../../abis/SignatureCollectable.json';
+import { web3modal } from '../Web3modal'
+import Logo from '../../logo.png';
 
 const uauth = new UAuth({
   // Client credentials copied from https://unstoppabledomains.com/app-dashboard

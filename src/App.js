@@ -3,7 +3,8 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import Navbar from './components/Navbar';
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import MyCollection from './pages/MyCollection';
 
@@ -39,6 +40,7 @@ function App() {
                 scContract={scContract} />
             </Route>
           </Switch>
+          <Footer />
       </Router>
     </DndProvider>
   );
