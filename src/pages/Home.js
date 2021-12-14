@@ -58,9 +58,9 @@ function Home({ user, account, scContract }) {
     }
   }
 
-  const load = () => {
-    sigPad.current.fromDataURL(signatureData);
-  }
+  // const load = () => {
+  //   sigPad.current.fromDataURL(signatureData);
+  // }
 
   const loadFromContract = async () => {
     const images = await scContract.methods.getSignatureImages(address || account).call();
@@ -140,16 +140,13 @@ function Home({ user, account, scContract }) {
   return (
     <div className='container mt-4'>
       <div className="row">
-        <div className="col-sm-12 col-md-5">
+        <div className="col-sm-12 col-md-5 mb-4">
           <div className="btn-group btn-group-lg mb-4" role="group" >
             <button type="button" className="btn btn-outline-primary" onClick={clear}>
               Clear
             </button>
             <button type="button" className="btn btn-outline-primary" onClick={uploadToIPFS}>
               Upload to IPFS
-            </button>
-            <button type="button" className="btn btn-outline-primary" onClick={load}>
-              Load
             </button>
           </div>
           <p className="text-center h4">Sign Here</p>
