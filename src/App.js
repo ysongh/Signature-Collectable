@@ -5,6 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import Alert from './components/common/Alert';
 import Home from './pages/Home';
 import MyCollection from './pages/MyCollection';
 
@@ -21,26 +22,30 @@ function App() {
           setUser={setUser}
           setAccount={setAccount}
           setSCContract={setSCContract} />
-          <Switch>
-            <Route path="/my-collection">
-              <MyCollection
-                user={user}
-                account={account} />
-            </Route>
-            <Route path="/collection/:address">
-              <Home
-                user={user}
-                account={account}
-                scContract={scContract} />
-            </Route>
-            <Route path="/">
-              <Home
-                user={user}
-                account={account}
-                scContract={scContract} />
-            </Route>
-          </Switch>
-          <Footer />
+
+        <Alert />
+
+        <Switch>
+          <Route path="/my-collection">
+            <MyCollection
+              user={user}
+              account={account} />
+          </Route>
+          <Route path="/collection/:address">
+            <Home
+              user={user}
+              account={account}
+              scContract={scContract} />
+          </Route>
+          <Route path="/">
+            <Home
+              user={user}
+              account={account}
+              scContract={scContract} />
+          </Route>
+        </Switch>
+
+        <Footer />
       </Router>
     </DndProvider>
   );
