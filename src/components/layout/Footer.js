@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer(){
   return(
-    <footer className="bg-primary p-4 text-center text-white mt-5">
+    <footer className="bg-primary p-3 text-center text-white mt-5 fixed-bottom">
       &copy;{new Date().getFullYear()} Signature Collectable
     </footer>
   );

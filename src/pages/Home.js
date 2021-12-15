@@ -138,7 +138,7 @@ function Home({ user, account, scContract }) {
   };
 
   return (
-    <div className='container mt-4'>
+    <div className='container mt-4 mb-5'>
       <div className="row">
         <div className="col-sm-12 col-md-5 mb-4">
           <div className="btn-group btn-group-lg mb-4" role="group" >
