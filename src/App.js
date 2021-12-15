@@ -8,6 +8,7 @@ import Footer from './components/layout/Footer';
 import Alert from './components/common/Alert';
 import Home from './pages/Home';
 import MyCollection from './pages/MyCollection';
+import HowItWorks from './pages/HowItWorks';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -36,6 +37,9 @@ function App() {
               user={user}
               account={account}
               scContract={scContract} />
+          </Route>
+          <Route path="/howitworks">
+            <HowItWorks />
           </Route>
           <Route path="/">
             <Home
