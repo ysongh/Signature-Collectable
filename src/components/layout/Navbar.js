@@ -1,43 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import UAuth from '@uauth/js'
 import Web3 from 'web3';
-import {
-  UNSTOPPABLEDOMAINS_CLIENTID,
-  UNSTOPPABLEDOMAINS_CLIENTSECRET,
-  UNSTOPPABLEDOMAINS_REDIRECT_URI,
-  UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI
-} from '../../config';
 
 import SignatureCollectable from '../../abis/SignatureCollectable.json';
 import { web3modal } from '../Web3modal'
 import Logo from '../../logo.png';
 
-const uauth = new UAuth({
-  // Client credentials copied from https://unstoppabledomains.com/app-dashboard
-  clientID: UNSTOPPABLEDOMAINS_CLIENTID,
-  clientSecret: UNSTOPPABLEDOMAINS_CLIENTSECRET,
-
-  // Requested scopes.
-  scope: 'openid email wallet',
-
-  // Redirect Uris copied from https://unstoppabledomains.com/app-dashboard
-  redirectUri: UNSTOPPABLEDOMAINS_REDIRECT_URI,
-  postLogoutRedirectUri: UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI,
-})
-
-function Navbar({ account, setUser, setAccount, setSCContract }) {
-  useEffect(() => {
-    uauth
-      .user()
-      .then(userData => {
-        setUser(userData);
-        setAccount(userData.sub);
-      })
-      .catch(error => {
-        console.error('profile error:', error);
-      })
-  }, [])
+function Navbar({ account, setUser, setAccount, setSCContract, uauth }) {
 
   const loadBlockchain = async () => {
     const provider = await web3modal.connect();

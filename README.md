@@ -15,6 +15,7 @@ A dapp where user can collect signatures and store them on IPFS
 - Covalent API
 - NFTPort API
 - ENS
+- Unstoppable Domains Login
 
 ## Running the dapp on local host
 - Clone or download this repository
@@ -26,5 +27,9 @@ A dapp where user can collect signatures and store them on IPFS
 export const SLATEAPIKEY = "< Create API key from slate.host >";
 export const NFTPORT_APIKEY= "< Your NFT PORT API key >";
 export const COVALENT_APIKEY= "< Your Covalent API key >";
+export const UNSTOPPABLEDOMAINS_CLIENTID = "< Your Unstoppable Domains Client Id >";
+export const UNSTOPPABLEDOMAINS_CLIENTSECRET = "< Your Unstoppable Domains Client Secret >";
+export const UNSTOPPABLEDOMAINS_REDIRECT_URI = "< Your Unstoppable Domains Redirect URL >";
+export const UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI = "< Your Unstoppable Domains Logout Redirect URL >";
 ```
 - Run `npm start` to start the dapp
