@@ -10,7 +10,7 @@ import Spinner from '../components/common/Spinner';
 
 import { SLATEAPIKEY, NFTPORT_APIKEY } from '../config';
 
-function Home({ user, account, scContract }) {
+function Dashboard({ user, account, scContract }) {
   const { address } = useParams();
 
   const [sigImgUrl, setSigImgUrl] = useState('');
@@ -129,7 +129,7 @@ function Home({ user, account, scContract }) {
   }
 
   const copyLink = () => {
-    navigator.clipboard.writeText(`${window.location.href}collection/${account}`);
+    navigator.clipboard.writeText(`${window.location.href}/${account}`);
   }
 
   const addImageToBoard = ({ sigImgUrl }) => {
@@ -197,4 +197,4 @@ function Home({ user, account, scContract }) {
   )
 }
 
-export default Home;
+export default Dashboard;

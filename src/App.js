@@ -6,7 +6,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Alert from './components/common/Alert';
-import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 import MyCollection from './pages/MyCollection';
 import HowItWorks from './pages/HowItWorks';
 
@@ -32,20 +32,23 @@ function App() {
               user={user}
               account={account} />
           </Route>
-          <Route path="/collection/:address">
-            <Home
-              user={user}
-              account={account}
-              scContract={scContract} />
-          </Route>
           <Route path="/howitworks">
             <HowItWorks />
           </Route>
-          <Route path="/">
-            <Home
+          <Route path="/dashboard/:address">
+            <Dashboard
               user={user}
               account={account}
               scContract={scContract} />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard
+              user={user}
+              account={account}
+              scContract={scContract} />
+          </Route>
+          <Route path="/">
+            <h1>Home</h1>
           </Route>
         </Switch>
 
