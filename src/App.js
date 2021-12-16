@@ -6,6 +6,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Alert from './components/common/Alert';
+import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import MyCollection from './pages/MyCollection';
 import HowItWorks from './pages/HowItWorks';
@@ -48,7 +49,7 @@ function App() {
               scContract={scContract} />
           </Route>
           <Route path="/">
-            <h1>Home</h1>
+            <Home />
           </Route>
         </Switch>
 

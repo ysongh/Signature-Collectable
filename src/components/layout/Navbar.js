@@ -98,10 +98,10 @@ function Navbar({ account, setUser, setAccount, setSCContract }) {
               <Link className="nav-link" aria-current="page" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to="/my-collection">My Collection</Link>
+              <Link className="nav-link" aria-current="page" to="/howitworks">How It Works</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to="/howitworks">How It Works</Link>
+              <Link className="nav-link" aria-current="page" to="/my-collection">My Collection</Link>
             </li>
           </ul>
           {!account
@@ -114,7 +114,7 @@ function Navbar({ account, setUser, setAccount, setSCContract }) {
           }
           <button className="btn btn-success" onClick={loadBlockchain}>
             {!account
-              ? "Connect to Wallet"
+              ? "Open Wallet"
               : account.length === 42
                 ? account.substring(0,8) + "..." + account.substring(34,42)
                 : account
