@@ -1,6 +1,23 @@
 # Signature Collectable
 A dapp where user can collect signatures and store them on IPFS
 
+## Info
+
+### Project name
+Signature Collectable
+
+### Working code in a public repo or PR to a public repo
+https://github.com/ysongh/Signature-Collectable/tree/unstoppabledomains
+
+### Recorded video demo of the integration (max. 3 mins)
+https://youtu.be/YxHvN77lnvw
+
+### Discord ID
+You Song#4593
+
+### UnstoppableDomain registered account email address
+yousonghou@gmail.com
+
 ## Features
 - Users can create their signature and stored them on IPFS
 - Users can share their collection of signatures with other to sign
