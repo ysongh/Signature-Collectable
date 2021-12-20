@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Web3 from 'web3';
 
 import SignatureCollectable from '../../abis/SignatureCollectable.json';
@@ -7,6 +7,7 @@ import { web3modal } from '../Web3modal'
 import Logo from '../../logo.png';
 
 function Navbar({ account, setUser, setAccount, setSCContract, uauth }) {
+  const history = useHistory();
 
   const loadBlockchain = async () => {
     const provider = await web3modal.connect();
@@ -24,6 +25,7 @@ function Navbar({ account, setUser, setAccount, setSCContract, uauth }) {
     if(netData){
       const contract = new web3.eth.Contract(SignatureCollectable.abi, SignatureCollectable.networks[netId].address);
       setSCContract(contract);
+      history.push('./dashboard');
     }
     else{
       window.alert('Contract is not deployed to detected network')
