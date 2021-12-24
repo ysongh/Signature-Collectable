@@ -134,7 +134,7 @@ function Dashboard({ user, account, scContract }) {
 
   const addImageToBoard = ({ sigImgUrl }) => {
     console.log("signatureArray", sigImgUrl);
-    setBoard([...board, sigImgUrl]);
+    setBoard((board) => [...board, sigImgUrl]);
   };
 
   return (
