@@ -2,7 +2,7 @@ import React, { useState }from 'react';
 
 import SpinnerButton from './common/SpinnerButton';
 
-function MintForm({ user, mint }) {
+function MintForm({ user, mint, account }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [address, setAddress] = useState('');
@@ -11,7 +11,7 @@ function MintForm({ user, mint }) {
 
   const applyYourAddress = () => {
     console.log(user);
-    setAddress(user.wallet_address);
+    setAddress(user ? user.wallet_address : account);
   }
 
   const handleMint = async () => {

@@ -194,7 +194,7 @@ function Dashboard({ user, account, scContract }) {
           </div>
           <p className="text-center h4">Your Collection Board</p>
           <div className="collapse mt-4" id="collapseExample">
-            <MintForm user={user} mint={mint} />
+            <MintForm user={user} mint={mint} account={account} />
           </div>
           <div className="card">
             <Board
