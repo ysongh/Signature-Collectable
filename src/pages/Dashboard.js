@@ -14,6 +14,7 @@ function Dashboard({ user, account, scContract }) {
   const { address } = useParams();
 
   const [sigImgUrl, setSigImgUrl] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [board, setBoard] = useState([]);
   const [saveLoading, setSaveLoading] = useState(false);
 
@@ -28,6 +29,14 @@ function Dashboard({ user, account, scContract }) {
   const uploadToIPFS = async () => {
     try{
       setSaveLoading(true);
+      setErrorMsg("");
+      
+      if(sigPad.current.isEmpty()) {
+        setSaveLoading(false);
+        setErrorMsg("You must sign");
+        return;
+      }
+
       signatureData = sigPad.current.toDataURL();
       console.log(signatureData);
 
@@ -156,6 +165,7 @@ function Dashboard({ user, account, scContract }) {
               ref={sigPad}
               canvasProps={{ className: "signaturePad" }} />
           </div>
+          {errorMsg && <p className="text-danger mt-2">{errorMsg}</p>}
           {saveLoading
             ? <Spinner />
             : sigImgUrl && (
