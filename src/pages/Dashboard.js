@@ -13,6 +13,7 @@ import { SLATEAPIKEY, NFTPORT_APIKEY } from '../config';
 function Dashboard({ user, account, scContract }) {
   const { address } = useParams();
 
+  const [color, setColor] = useState('black');
   const [sigImgUrl, setSigImgUrl] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [board, setBoard] = useState([]);
@@ -158,10 +159,16 @@ function Dashboard({ user, account, scContract }) {
               Upload to IPFS
             </button>
           </div>
-          <p className="text-center h4">Sign Here</p>
+
+          <div className="d-flex justify-content-between">
+            <p className="text-center h4">Sign Here</p>
+            <input type="color" className="form-control form-control-color" value={color} title="Choose your color" onChange={(e) => setColor(e.target.value)} />
+          </div>
+          
+
           <div className='signatureContainer'>
             <SignaturePad
-              penColor='blue'
+              penColor={color}
               ref={sigPad}
               canvasProps={{ className: "signaturePad" }} />
           </div>
@@ -188,7 +195,7 @@ function Dashboard({ user, account, scContract }) {
             <button type="button" className="btn btn-outline-primary"  data-bs-toggle="collapse" data-bs-target="#collapseExample">
               Mint on Polygon
             </button>
-            <button type="button" className="btn btn-outline-primary" onClick={copyLink}>
+            <button type="button" className="btn btn-outline-primary" onClick={copyLink} data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
               Copy Link
             </button>
           </div>
