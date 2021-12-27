@@ -82,6 +82,7 @@ function App() {
             <Home
               user={user}
               uauth={uauth}
+              account={account}
               setAccount={setAccount} />
           </Route>
         </Switch>

@@ -3,12 +3,12 @@ import { useHistory } from 'react-router-dom';
 
 import Alert from '../components/common/Alert';
 
-function Home({ user, uauth, setAccount }) {
+function Home({ user, uauth, account, setAccount }) {
   const router = useHistory();
 
   useEffect(() => {
-    if (user) router.push('/dashboard');
-  }, [user])
+    if (user || account) router.push('/dashboard');
+  }, [user, account])
 
   const loginWithUnstoppableDomains = async () => {
     try {
