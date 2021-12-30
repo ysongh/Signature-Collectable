@@ -21,6 +21,11 @@ A dapp where user can collect signatures and store them on IPFS
 - Clone or download this repository
 - Run `npm i` to install the dependencies
 - Install and open up Ganache and click "Quickstart"
+- Create a file called '.env' on the root folder and add the following code
+```
+MNEMONIC=< Your mnemonic >
+RPC_URL = < Your RPC URL for Rinkeby Testnet>
+```
 - Run `truffle migrate` to deploy the contract
 - Create a file called 'config.js' on the src folder and add the following code
 ```
