@@ -18,6 +18,7 @@ function Dashboard({ user, account, scContract }) {
   const [errorMsg, setErrorMsg] = useState('');
   const [board, setBoard] = useState([]);
   const [saveLoading, setSaveLoading] = useState(false);
+  const [copyText, setCopyText] = useState("Copy Link");
 
   let sigPad = useRef({});
   let signatureData;
@@ -139,6 +140,7 @@ function Dashboard({ user, account, scContract }) {
   }
 
   const copyLink = () => {
+    setCopyText("Copied");
     navigator.clipboard.writeText(`${window.location.href}/${account}`);
   }
 
@@ -196,7 +198,7 @@ function Dashboard({ user, account, scContract }) {
               Mint on Polygon
             </button>
             <button type="button" className="btn btn-outline-primary" onClick={copyLink} data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
-              Copy Link
+              {copyText}
             </button>
           </div>
           <p className="text-center h4">Your Collection Board</p>
