@@ -71,9 +71,11 @@ function Navbar({ account, setUser, setAccount, setSCContract, uauth }) {
             <li className="nav-item">
               <Link className="nav-link" aria-current="page" to="/howitworks">How It Works</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to="/my-collection">My Collection</Link>
-            </li>
+            {account
+              && <li className="nav-item">
+                  <Link className="nav-link" aria-current="page" to="/my-collection">My Collection</Link>
+                </li>
+            }
           </ul>
           {!account
             ? <button className="btn btn-sm me-2" onClick={loginWithUnstoppableDomains}>
