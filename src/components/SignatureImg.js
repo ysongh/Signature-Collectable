@@ -17,6 +17,7 @@ function SignatureImg({ sigImgUrl, signatureData }) {
   return (
     <div>
       <img
+        className="signatureImg"
         ref={drag}
         src={sigImgUrl}
         alt="signature"

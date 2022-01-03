@@ -166,7 +166,6 @@ function Dashboard({ user, account, scContract }) {
             <p className="text-center h4">Sign Here</p>
             <input type="color" className="form-control form-control-color" value={color} title="Choose your color" onChange={(e) => setColor(e.target.value)} />
           </div>
-          
 
           <div className='signatureContainer'>
             <SignaturePad
