@@ -19,6 +19,7 @@ function Dashboard({ user, account, scContract }) {
   const [board, setBoard] = useState([]);
   const [saveLoading, setSaveLoading] = useState(false);
   const [copyText, setCopyText] = useState("Copy Link");
+  const [isSave, setIsSave] = useState("");
 
   let sigPad = useRef({});
   let signatureData;
@@ -80,11 +81,18 @@ function Dashboard({ user, account, scContract }) {
   }
 
   const save = async () => {
-    const tx = await scContract.methods
-      .addImageToCollection(address || account, board)
-      .send({ from: account });
+    try{
+      const tx = await scContract.methods
+        .addImageToCollection(address || account, board)
+        .send({ from: account });
 
-    console.log(tx);
+      console.log(tx);
+      setIsSave("Saved!");
+    } catch (error) {
+      console.error(error);
+      setIsSave("Error!");
+    }
+    
   }
 
   const convertBase64ToImage = signatureData => {
@@ -201,6 +209,7 @@ function Dashboard({ user, account, scContract }) {
             </button>
           </div>
           <p className="text-center h4">Your Collection Board</p>
+          <p className="text-center">{isSave}</p>
           <div className="collapse mt-4" id="collapseExample">
             <MintForm user={user} mint={mint} account={account} />
           </div>
