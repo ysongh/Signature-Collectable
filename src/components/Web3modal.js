@@ -1,4 +1,5 @@
 import * as UAuthWeb3Modal from '@uauth/web3modal';
+import WalletConnectProvider from '@walletconnect/web3-provider'
 import UAuthSPA from '@uauth/js';
 import Web3Modal from "web3modal";
 
@@ -6,7 +7,8 @@ import {
     UNSTOPPABLEDOMAINS_CLIENTID,
     UNSTOPPABLEDOMAINS_CLIENTSECRET,
     UNSTOPPABLEDOMAINS_REDIRECT_URI,
-    UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI
+    UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI,
+    INFURA_ID
   } from '../config';
 
 // These options are used to construct the UAuthSPA instance.
@@ -33,6 +35,13 @@ const providerOptions = {
 
     // The SPA libary options
     options: uauthOptions,
+  },
+
+  walletconnect: {
+    package: WalletConnectProvider,
+    options: {
+      infuraId: INFURA_ID,
+    },
   },
 
   // Include any other web3modal providers here too...
